@@ -73,12 +73,18 @@ const Login = async (req, res) => {
       });
     }
 
+    res.cookie("token", generateToken(user._id), {
+      httpOnly: true,
+      secure: false,  
+     sameSite: "lax",
+    })
+
+
     res.json(200).json({
       message: "Login successful",
       _id: user._id,
       username: user.username,
       email: user.email,
-      token: generateToken(user._id),
     });
   } catch (error) {
     res.status(500).json({
