@@ -25,12 +25,12 @@ const Register = async (req, res) => {
       password,
     });
 
-    const token = generateToken(token);
+    const token = generateToken(user._id);
 
     res.cookie("token", token, {
       httpOnly: true,
       secure: false,
-      sameSite: "strict",
+      sameSite: "lax",
     });
 
     res.status(201).json({
@@ -40,6 +40,7 @@ const Register = async (req, res) => {
       token: token,
     });
   } catch (error) {
+    console.log(error)
     res.status(500).json({
       message: "User Registration failed",
     });
@@ -64,7 +65,7 @@ const Login = async (req, res) => {
       });
     }
 
-    const isMatch = await userModel.comparePassword(password);
+    const isMatch = await user.comparePassword(password);
 
     if (!isMatch) {
       return res.status(401).json({
