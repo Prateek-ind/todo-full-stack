@@ -1,4 +1,4 @@
-
+"use client"
 import {
   Dialog,
   DialogContent,
@@ -9,6 +9,8 @@ import {
 import { useState } from "react"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
+import { useRouter } from "next/navigation"
+
 
 type AuthMode = 'login' | 'register'
 
@@ -23,6 +25,7 @@ const AuthModal = ({open, setOpen}: any) => {
     })
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
+    const router = useRouter()
 
     
     
@@ -71,6 +74,8 @@ const AuthModal = ({open, setOpen}: any) => {
 
              console.log("Success", data)
              setOpen(false)
+             router.push('/todos')
+             
 
         } catch (error: any) {
             setError(error.message)
