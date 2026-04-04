@@ -2,6 +2,7 @@ import Image from "next/image";
 
 export default function Home() {
   return (
+<<<<<<< Updated upstream
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
         <Image
@@ -33,6 +34,27 @@ export default function Home() {
             </a>{" "}
             center.
           </p>
+=======
+    <div className="px-6 flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
+     
+        <div className="grid grid-cols-2 gap-10 max-w-6xl w-full items-center">
+
+          {/* left side*/}
+          <div className="space-y-6">
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-zinc-900 dark:text-white">
+              Organize your life, 
+              <span className="font-bold tracking-tight text-zinc-900 dark:text-white"> simply</span></h1>
+
+              <p className="text-zinc-600 dark:text-zinc-400 text-lg max-w-md"> A minimal space to manage your tasks, stay focused, and get things done without clutter.</p>
+
+              <div className="flex gap-4">
+                <Button onClick={handleOpen} className="rounded-xl py-2 px-6 cursor-pointer">Register / Login</Button>
+                
+              </div>
+          </div>
+
+          <HeroCard/>
+>>>>>>> Stashed changes
         </div>
         <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
           <a
