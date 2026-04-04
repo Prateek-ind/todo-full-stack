@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {CreateTodo, GetTodo, EditTodo, DeleteTodo} = require("../controllers/todo.controller")
+const {CreateTodo, GetTodos, EditTodo, DeleteTodo} = require("../controllers/todo.controller")
 
 
  
@@ -8,7 +8,7 @@ router.post("/create", CreateTodo);
 
 
  
-router.get("/", GetTodo);
+router.get("/", GetTodos);
 
  
 router.patch("/:id", EditTodo);

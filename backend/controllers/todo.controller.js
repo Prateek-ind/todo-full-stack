@@ -27,12 +27,12 @@ const CreateTodo = async (req, res) => {
   }
 }
 
-const GetTodo = async (req, res) => {
+const GetTodos = async (req, res) => {
   try {
     const todos = await todoModel.find();
 
     res.status(200).json({
-      count: todos.length,
+      message: "Todo list",
       todos,
     });
   } catch (error) {
@@ -95,4 +95,4 @@ const DeleteTodo = async (req, res) => {
   }
 }
 
-module.exports = {CreateTodo, GetTodo, EditTodo, DeleteTodo}
+module.exports = {CreateTodo, GetTodos, EditTodo, DeleteTodo}
