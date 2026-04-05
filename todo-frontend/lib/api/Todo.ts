@@ -1,0 +1,71 @@
+import { todoType } from "@/types/todoType";
+
+export const getTodos = async () => {
+    try {
+        const response = await fetch(`${process.env.BASE_URL}/api/todos`);
+        if(!response.ok) {
+            throw new Error("Failed to fetch todos");
+        }
+        const data = await response.json();
+        return data.todos;
+    } catch (error) {
+        console.error("Error fetching todos:", error);
+        throw error;
+    }
+}
+
+export const createTodo = async (todo: todoType) => {    
+    try {
+        const response = await fetch(`${process.env.BASE_URL}/api/todos`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(todo)
+        });
+        if(!response.ok) {
+            throw new Error("Failed to create todo");
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error creating todo:", error);
+        throw error;
+    }
+}
+
+export const updateTodo = async (id: string, todo: todoType) => {
+    try {
+        const response = await fetch(`${process.env.BASE_URL}/api/todos/${id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(todo)
+        });
+        if(!response.ok) {
+            throw new Error("Failed to update todo");
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error updating todo:", error);
+        throw error;
+    }
+}
+
+export const deleteTodo = async (id: string) => {
+    try {
+        const response = await fetch(`${process.env.BASE_URL}/api/todos/${id}`, {
+            method: "DELETE"
+        });
+        if(!response.ok) {
+            throw new Error("Failed to delete todo");
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error deleting todo:", error);
+        throw error;
+    }
+}

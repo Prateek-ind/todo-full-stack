@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Header from "./Header"
 import TasksList from "./TasksList"
-import TodosSidebar from "./TodosSidebar"
+import TodosSidebar from "./Sidebar"
 
 const TodosClient = () => {
   const [filter, setFilter] = useState<'pending' | 'completed'>('pending')
