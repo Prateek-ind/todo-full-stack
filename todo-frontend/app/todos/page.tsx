@@ -1,5 +1,5 @@
 
-import TodosClient from '@/components/custom/TodosClient'
+import TodosClient from '@/components/custom/todos/TodosClient'
 
 
 const TodosPage = () => {
