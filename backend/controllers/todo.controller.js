@@ -3,7 +3,7 @@ const todoModel = require("../model/todoModel");
 
 const CreateTodo = async (req, res) => {
   try {
-    const { title, description } = req.body;
+    const { title, description, completed } = req.body;
 
     if (!title) {
       return res.status(400).json({
@@ -14,6 +14,7 @@ const CreateTodo = async (req, res) => {
     const newTodo = await todoModel.create({
       title,
       description,
+      completed,
     });
 
     res.status(201).json({

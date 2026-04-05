@@ -1,7 +1,7 @@
 "use client";
 
 import AuthModal from "@/components/custom/AuthModal";
-import HeroCard from "@/components/custom/todo/HeroCard";
+import HeroCard from "@/components/custom/HeroCard";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 

@@ -2,7 +2,7 @@ import { todoType } from "@/types/todoType";
 
 export const getTodos = async () => {
     try {
-        const response = await fetch(`${process.env.BASE_URL}/api/todos`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/todos`);
         if(!response.ok) {
             throw new Error("Failed to fetch todos");
         }
@@ -16,13 +16,14 @@ export const getTodos = async () => {
 
 export const createTodo = async (todo: todoType) => {    
     try {
-        const response = await fetch(`${process.env.BASE_URL}/api/todos`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/todos/create`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(todo)
         });
+        console.log(response);
         if(!response.ok) {
             throw new Error("Failed to create todo");
         }
@@ -36,7 +37,7 @@ export const createTodo = async (todo: todoType) => {
 
 export const updateTodo = async (id: string, todo: todoType) => {
     try {
-        const response = await fetch(`${process.env.BASE_URL}/api/todos/${id}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/todos/${id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
@@ -56,7 +57,7 @@ export const updateTodo = async (id: string, todo: todoType) => {
 
 export const deleteTodo = async (id: string) => {
     try {
-        const response = await fetch(`${process.env.BASE_URL}/api/todos/${id}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/todos/${id}`, {
             method: "DELETE"
         });
         if(!response.ok) {

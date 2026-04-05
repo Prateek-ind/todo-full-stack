@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Calendar } from "../ui/calendar";
+import { enGB } from "date-fns/locale";
 
 const Calender = () => {
   const [date, setDate] = React.useState<Date | undefined>(new Date());
@@ -9,6 +10,7 @@ const Calender = () => {
       mode="single"
       selected={date}
       onSelect={setDate}
+      locale={enGB}
       className="rounded-lg border"
     />
   );

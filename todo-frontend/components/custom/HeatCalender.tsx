@@ -19,5 +19,5 @@ const data = [
 ];
 
 export default function HeatCalendar() {
-  return <ActivityCalendar data={data} />;
+  return <ActivityCalendar data={data} colorScheme="light" />;
 }
