@@ -23,6 +23,7 @@ const TaskForm = ({ initialData, isEdit, setOpen }: Props) => {
     title: initialData?.title || "",
     description: initialData?.description || "",
     completed: initialData?.completed || false,
+    date: initialData?.date || new Date().toISOString(),
   });
 
   const mutation = useMutation({

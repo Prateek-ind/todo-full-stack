@@ -44,3 +44,20 @@ export const register = async (  username: string, email: string, password: stri
     }
 }
 
+export const logout = async () => {
+    try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/logout`, {
+            method: "POST",
+            credentials: "include"
+        });
+        if (!response.ok) {
+            throw new Error("Failed to logout");
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error logging out:", error);
+        throw error;
+    }
+}
+
