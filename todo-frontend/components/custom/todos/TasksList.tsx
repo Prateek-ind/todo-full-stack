@@ -6,14 +6,16 @@ import { todoType } from "@/types/todoType";
 
 type Props = {
   filter: "pending" | "completed";
+  date?: Date | undefined;
 };
 
-const TasksList = ({ filter }: Props) => {
+const TasksList = ({ filter, date }: Props) => {
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["todos"],
+    queryKey: ["todos", date],
     queryFn: async () => {
       return await getTodos();
     },
+    retry: false,
   });
   let content;
 
@@ -30,14 +32,19 @@ const TasksList = ({ filter }: Props) => {
   } else if (!data || data.length === 0) {
     content = (
       <div className="text-center text-zinc-500 mt-10">
-        No tasks yet. Start by creating one.
+        No {filter} tasks yet. Start by creating one.
       </div>
     );
   } else {
-    const filteredData =
-      filter === "pending"
-        ? data.filter((task: todoType) => !task.completed)
-        : data.filter((task: todoType) => task.completed);
+    const filteredData = data
+      .filter((task: todoType) =>
+        filter === "pending" ? !task.completed : task.completed,
+      )
+      .filter((task: todoType) => {
+        if (!date) return true;
+        const taskDate = new Date(task.date);
+        return taskDate.toDateString() === date.toDateString();
+      });
 
     if (filteredData.length === 0) {
       content = (
@@ -52,10 +59,7 @@ const TasksList = ({ filter }: Props) => {
     }
   }
   return (
-    <div className="col-span-2 flex-1 overflow-y-auto space-y-3">
-      {/* Task Card */}
-      {content}
-    </div>
+    <div className="col-span-2 flex-1 overflow-y-auto space-y-3">{content}</div>
   );
 };
 

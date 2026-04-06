@@ -1,10 +1,8 @@
 const todoModel = require("../model/todoModel");
 
-
 const CreateTodo = async (req, res) => {
   try {
-    const { title, description, completed } = req.body;
-
+    const { title, description, completed, date } = req.body;
     if (!title) {
       return res.status(400).json({
         message: "Title is required",
@@ -15,6 +13,8 @@ const CreateTodo = async (req, res) => {
       title,
       description,
       completed,
+      date: date || new Date().toISOString(),
+      user: req.user.id,
     });
 
     res.status(201).json({
@@ -26,11 +26,11 @@ const CreateTodo = async (req, res) => {
       message: "Failed to create todo",
     });
   }
-}
+};
 
 const GetTodos = async (req, res) => {
   try {
-    const todos = await todoModel.find();
+    const todos = await todoModel.find({ user: req.user.id });
 
     res.status(200).json({
       message: "Todo list",
@@ -41,19 +41,19 @@ const GetTodos = async (req, res) => {
       message: "Failed to fetch todos",
     });
   }
-}
+};
 
 const EditTodo = async (req, res) => {
   try {
     const { id } = req.params;
 
     const updatedTodo = await todoModel.findByIdAndUpdate(
-      id,
+      { _id: id, user: req.user.id },
       req.body,
       {
         new: true,
         runValidators: true,
-      }
+      },
     );
 
     if (!updatedTodo) {
@@ -71,13 +71,12 @@ const EditTodo = async (req, res) => {
       message: "Failed to update todo",
     });
   }
-}
+};
 
 const DeleteTodo = async (req, res) => {
   try {
     const { id } = req.params;
-
-    const deletedTodo = await todoModel.findByIdAndDelete(id);
+    const deletedTodo = await todoModel.findByIdAndDelete({ _id: id, user: req.user.id });
 
     if (!deletedTodo) {
       return res.status(404).json({
@@ -94,6 +93,6 @@ const DeleteTodo = async (req, res) => {
       message: "Failed to delete todo",
     });
   }
-}
+};
 
-module.exports = {CreateTodo, GetTodos, EditTodo, DeleteTodo}
+module.exports = { CreateTodo, GetTodos, EditTodo, DeleteTodo };

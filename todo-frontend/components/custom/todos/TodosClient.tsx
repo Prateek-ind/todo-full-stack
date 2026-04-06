@@ -8,6 +8,7 @@ import CalendersContainer from "./CalendersContainer";
 
 const TodosClient = () => {
   const [filter, setFilter] = useState<"pending" | "completed">("pending");
+  const [date, setDate] = useState<Date | undefined>(new Date());
 
   return (
     <>
@@ -15,8 +16,8 @@ const TodosClient = () => {
 
       <div className="grid grid-cols-4 gap-6 h-[calc(100%-80px)]">
         <TodosSidebar filter={filter} setFilter={setFilter} />
-        <TasksList filter={filter} />
-        <CalendersContainer />
+        <TasksList filter={filter} date={date} />
+        <CalendersContainer date={date} setDate={setDate} />
       </div>
     </>
   );
