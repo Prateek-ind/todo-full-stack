@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 
 const todoSchema = new mongoose.Schema(
   {
+    user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
     title: {
       type: String,
       trim: true,
@@ -15,6 +20,10 @@ const todoSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    date: {
+      type: Date,
+      required: true,
+    }
   },
   { timestamps: true },
 );
