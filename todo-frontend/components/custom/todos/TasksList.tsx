@@ -24,13 +24,13 @@ const TasksList = ({ filter, date }: Props) => {
 
   if (isLoading) {
     return (
-      <div className="text-center text-zinc-500 mt-10">Loading tasks...</div>
+      <div className="col-span-2 text-center text-zinc-500 mt-10">Loading tasks...</div>
     );
   }
 
   if (isError) {
     return (
-      <div className="text-center text-red-500 mt-10">
+      <div className="col-span-2 text-center text-red-500 mt-10">
         Error loading tasks: {(error as Error).message}
       </div>
     );
@@ -49,7 +49,7 @@ const TasksList = ({ filter, date }: Props) => {
 
   if (data.length === 0) {
     return (
-      <div className="text-center text-zinc-500 mt-10">
+      <div className="col-span-2 text-center text-zinc-500 mt-10">
         No tasks yet. Start by creating one 🚀
       </div>
     );
@@ -57,16 +57,16 @@ const TasksList = ({ filter, date }: Props) => {
 
   if (filteredData.length === 0) {
     return (
-      <div className="text-center text-zinc-500 mt-10">
+      <div className="col-span-2 text-center text-zinc-500 mt-10">
         No {filter} tasks {date ? "for selected date" : ""}.
       </div>
     );
   }
 
   return (
-    <div className="col-span-2 flex-1 overflow-y-auto space-y-3">
+    <div className=" col-span-2 flex-1 overflow-y-auto space-y-3">
       {filteredData.map((task: todoType) => (
-        <TaskCard key={task._id} task={task} />
+        <TaskCard key={task._id} task={task} date={date} />
       ))}
     </div>
   );

@@ -1,6 +1,6 @@
 import { CalenderContainerProps } from "@/types/calenderContainerTypes"
-import Calender from "../Calender"
-import  HeatCalender from "../HeatCalender"
+import Calender from "./Calender"
+import  HeatCalender from "./HeatCalender"
 
 
 
