@@ -5,7 +5,7 @@ import NewTask from "./task/NewTask";
 import { logout } from "@/lib/api/Auth";
 import { useRouter } from "next/navigation";
 
-const Header = () => {
+const Header = ({ date }: { date?: Date }) => {
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
@@ -37,7 +37,7 @@ const Header = () => {
           Logout
         </Button>
       </div>
-      <NewTask open={open} setOpen={setOpen} />
+      <NewTask date={date} open={open} setOpen={setOpen} />
     </div>
   );
 };

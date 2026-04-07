@@ -7,7 +7,7 @@ import UpdateTask from "./UpdateTask";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteTodo, updateTodo } from "@/lib/api/Todo";
 
-const TaskCard = ({ task }: { task: todoType }) => {
+const TaskCard = ({ task, date }: { task: todoType; date?: Date }) => {
   const [edit, setEdit] = useState(false);
   const queryClient = useQueryClient();
 
@@ -44,13 +44,14 @@ const TaskCard = ({ task }: { task: todoType }) => {
   return (
     <>
       <div className="group p-4 rounded-xl border flex items-center justify-between hover:shadow-sm transition">
-        <div>
+        <div className="flex flex-col gap-2">
           <p className="font-medium text-lg group-hover:text-black dark:group-hover:text-white">
             {task.title}
           </p>
           <p className="text-sm text-zinc-500 group-hover:text-zinc-700 dark:group-hover:text-zinc-300">
             {task.description}
           </p>
+         
         </div>
         <div className="flex flex-col gap-2">
           {!task.completed && (

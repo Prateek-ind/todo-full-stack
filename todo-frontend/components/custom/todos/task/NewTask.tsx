@@ -12,9 +12,10 @@ import NewTaskForm from "./TaskForm";
 type NewTaskProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
+  date?: Date;
 };
 
-const NewTask = ({ open, setOpen }: NewTaskProps) => {
+const NewTask = ({ open, setOpen, date }: NewTaskProps) => {
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
@@ -25,7 +26,7 @@ const NewTask = ({ open, setOpen }: NewTaskProps) => {
               Add a task to stay organized and keep track of your work.
             </DialogDescription>
           </DialogHeader>
-          <NewTaskForm setOpen={setOpen} />
+          <NewTaskForm selectedDate={date} setOpen={setOpen} />
         </DialogContent>
       </Dialog>
     </>

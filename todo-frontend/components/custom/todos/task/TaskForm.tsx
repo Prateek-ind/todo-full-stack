@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { createTodo, updateTodo } from "@/lib/api/Todo";
 import { todoType } from "@/types/todoType";
+import { formatDate } from "@/utils/formatDate";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
@@ -11,10 +12,13 @@ type Props = {
   initialData?: todoType;
   isEdit?: boolean;
   setOpen: (open: boolean) => void;
+  selectedDate?: Date;
 };
 
-const TaskForm = ({ initialData, isEdit, setOpen }: Props) => {
+const TaskForm = ({ initialData, isEdit, setOpen, selectedDate }: Props) => {
   const queryClient = useQueryClient();
+
+  const formattedDate = formatDate(selectedDate || new Date());
  
 
  
@@ -23,7 +27,7 @@ const TaskForm = ({ initialData, isEdit, setOpen }: Props) => {
     title: initialData?.title || "",
     description: initialData?.description || "",
     completed: initialData?.completed || false,
-    date: initialData?.date || new Date().toISOString(),
+    date: initialData?.date || formattedDate,
   });
 
   const mutation = useMutation({
@@ -50,6 +54,20 @@ const TaskForm = ({ initialData, isEdit, setOpen }: Props) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if(!selectedDate) return
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const chosenDate = new Date(selectedDate);  
+    chosenDate.setHours(0, 0, 0, 0);
+
+    if(chosenDate < today){
+      alert("Please select a valid date");
+      return;
+    }
+
     mutation.mutate(formData as todoType);
   };
   return (
