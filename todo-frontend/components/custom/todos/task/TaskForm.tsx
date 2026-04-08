@@ -19,10 +19,8 @@ const TaskForm = ({ initialData, isEdit, setOpen, selectedDate }: Props) => {
   const queryClient = useQueryClient();
 
   const formattedDate = formatDate(selectedDate || new Date());
- 
 
- 
-   const [formData, setFormData] = useState<todoType>({
+  const [formData, setFormData] = useState<todoType>({
     _id: initialData?._id || "",
     title: initialData?.title || "",
     description: initialData?.description || "",
@@ -55,15 +53,17 @@ const TaskForm = ({ initialData, isEdit, setOpen, selectedDate }: Props) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if(!selectedDate) return
+    if (!isEdit) {
+      if (!selectedDate) return;
+    }
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    const chosenDate = new Date(selectedDate);  
+    const chosenDate = new Date(selectedDate as Date);
     chosenDate.setHours(0, 0, 0, 0);
 
-    if(chosenDate < today){
+    if (chosenDate < today) {
       alert("Please select a valid date");
       return;
     }

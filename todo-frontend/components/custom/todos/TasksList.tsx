@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import TaskCard from "./task/TaskCard";
 import { getTodos } from "@/lib/api/Todo";
 import { todoType } from "@/types/todoType";
+import { Search } from "lucide-react";
+import SearchBar from "./SearchBar";
 
 type Props = {
   filter: "pending" | "completed";
@@ -65,6 +67,7 @@ const TasksList = ({ filter, date }: Props) => {
 
   return (
     <div className=" col-span-2 flex-1 overflow-y-auto space-y-3">
+      {/* <SearchBar/> */}
       {filteredData.map((task: todoType) => (
         <TaskCard key={task._id} task={task} date={date} />
       ))}

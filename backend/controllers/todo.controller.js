@@ -55,6 +55,7 @@ const EditTodo = async (req, res) => {
         runValidators: true,
       },
     );
+    console.log(updatedTodo);
 
     if (!updatedTodo) {
       return res.status(404).json({

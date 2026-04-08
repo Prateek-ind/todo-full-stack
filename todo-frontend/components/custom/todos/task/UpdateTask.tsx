@@ -6,8 +6,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-import NewTaskForm from "./TaskForm";
 import { todoType } from "@/types/todoType";
+import TaskForm from "./TaskForm";
 
 type Props = {
   task: todoType;
@@ -26,7 +26,7 @@ const UpdateTask = ({ task, open, setOpen }: Props) => {
               Update your task to stay organized and keep track of your work.
             </DialogDescription>
           </DialogHeader>
-          <NewTaskForm initialData={task} isEdit={true} setOpen={setOpen} />
+          <TaskForm initialData={task} isEdit={true} setOpen={setOpen} />
         </DialogContent>
       </Dialog>
     </>
