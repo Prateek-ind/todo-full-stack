@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
   Dialog,
   DialogContent,
@@ -7,7 +7,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-import NewTaskForm from "./TaskForm";
+import NewTaskForm from "./CreateTaskForm";
 
 type NewTaskProps = {
   open: boolean;

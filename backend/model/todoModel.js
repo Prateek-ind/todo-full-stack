@@ -23,7 +23,12 @@ const todoSchema = new mongoose.Schema(
     date: {
       type: Date,
       required: true,
-    }
+    },
+    priority: {
+      type: String,
+      enum: ["Low", "Medium", "High"],
+      default: "Medium",
+    },
   },
   { timestamps: true },
 );

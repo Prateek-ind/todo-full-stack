@@ -45,15 +45,22 @@ const TaskCard = ({ task, date }: { task: todoType; date?: Date }) => {
 
   const isValid = date ? new Date(task.date) === date : true
 
+
   return (
     <>
       <div className="group p-4 rounded-xl border flex items-center justify-between hover:shadow-sm transition">
         <div className="flex flex-col gap-2">
           <p className="font-medium text-lg group-hover:text-black dark:group-hover:text-white">
-            {task.title}
+            Title: {task.title}
           </p>
+          
           <p className="text-sm text-zinc-500 group-hover:text-zinc-700 dark:group-hover:text-zinc-300">
-            {task.description}
+            Description: {task.description}
+          </p>
+          <p className="text-xs text-zinc-400 group-hover:text-zinc-500 dark:group-hover:text-zinc-400">
+            Priority: <span className={task.priority === "High" ? "text-red-500" : task.priority === "Medium" ? "text-yellow-500" : "text-green-500"}>
+              {task.priority}
+            </span>
           </p>
           {!task.completed && (
             <div className="mt-4 flex gap-4">
