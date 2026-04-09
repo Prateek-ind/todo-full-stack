@@ -7,10 +7,11 @@ const userRoutes = require("../Routes/user.routes");
 const protect = require("../middlewares/protect.middleware");
 
 const app = express();
+
 app.use(cors({
-    origin: "https://todo-full-stack-alpha.vercel.app/",
-    credentials: true
-}))
+  origin: "https://todo-full-stack-alpha.vercel.app",
+  credentials: true
+}));
 app.use(express.json());
 app.use(cookieParser());
 
