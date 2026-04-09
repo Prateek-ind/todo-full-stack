@@ -79,7 +79,7 @@ const Login = async (req, res) => {
       sameSite: "none",
     });
 
-    res.json(200).json({
+    res.status(200).json({
       message: "Login successful",
       _id: user._id,
       username: user.username,
