@@ -1,8 +1,10 @@
 "use client"
 
+import { Dispatch, SetStateAction } from "react";
+
 type Props = {
-    filter: string;
-    setFilter: (filter: string) => void;
+    filter: "pending" | "completed";
+    setFilter: Dispatch<SetStateAction<"pending" | "completed">>;
 }
 
 const Sidebar = ( {filter, setFilter}: Props) => {
