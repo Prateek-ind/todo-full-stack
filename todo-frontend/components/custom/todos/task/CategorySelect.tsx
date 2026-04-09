@@ -14,22 +14,23 @@ type Props = {
   onChange: (value: string) => void;
 };
 
-const PrioritySelect = ({ value, onChange }: Props) => {
+const CategorySelect = ({ value, onChange }: Props) => {
   return (
     <Select value={value} onValueChange={onChange}>
       <SelectTrigger className="w-32 max-w-xs mb-4">
-        <SelectValue className="text-zinc-500" placeholder="Select priority" />
+        <SelectValue className="text-zinc-500" placeholder="Select category" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Priority</SelectLabel>
-          <SelectItem value="low">Low</SelectItem>
-          <SelectItem value="medium">Medium</SelectItem>
-          <SelectItem value="high">High</SelectItem>
+          <SelectLabel>Category</SelectLabel>
+          <SelectItem value="work">Work</SelectItem>
+          <SelectItem value="personal">Personal</SelectItem>
+          <SelectItem value="shopping">Shopping</SelectItem>
+          <SelectItem value="others">Others</SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>
   );
 };
 
-export default PrioritySelect;
+export default CategorySelect;

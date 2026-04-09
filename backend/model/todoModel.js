@@ -30,6 +30,11 @@ const todoSchema = new mongoose.Schema(
       default: "medium",
       required: true,
     },
+    category: {
+      type: String,
+      enum: ["work", "personal", "shopping", "others"],
+      trim: true,
+    },
   },
   { timestamps: true },
 );

@@ -8,6 +8,7 @@ import { formatDate } from "@/utils/formatDate";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import PrioritySelect from "./PrioritySelect";
+import CategorySelect from "./CategorySelect";
 
 type Props = {
   initialData?: todoType;
@@ -28,6 +29,7 @@ const TaskForm = ({ initialData, isEdit, setOpen, selectedDate }: Props) => {
     completed: initialData?.completed || false,
     date: initialData?.date || formattedDate,
     priority: initialData?.priority || "medium",
+    category: initialData?.category || "work",
   });
 
   const mutation = useMutation({
@@ -54,6 +56,13 @@ const TaskForm = ({ initialData, isEdit, setOpen, selectedDate }: Props) => {
     setFormData({
       ...formData,
       priority: value,
+    });
+  };
+
+  const handleCategoryChange = (value: string) => {
+    setFormData({
+      ...formData,
+      category: value,
     });
   };
 
@@ -91,14 +100,20 @@ const TaskForm = ({ initialData, isEdit, setOpen, selectedDate }: Props) => {
         <Textarea
           name="description"
           placeholder="Task description"
-          className="mb-4"
+          className="mb-4 max-h-48 overflow-y-auto"
           value={formData.description}
           onChange={handleChange}
         />
-        <PrioritySelect
-          value={formData?.priority}
-          onChange={handlePriorityChange}
-        />
+        <div className="flex gap-4">
+          <PrioritySelect
+            value={formData.priority}
+            onChange={handlePriorityChange}
+          />
+          <CategorySelect
+            value={formData.category}
+            onChange={handleCategoryChange}
+          />
+        </div>
         <Button
           type="submit"
           disabled={mutation.isPending}

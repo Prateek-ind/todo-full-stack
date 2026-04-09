@@ -17,6 +17,7 @@ const TasksList = ({ filter, date }: Props) => {
   const [priorityFilter, setPriorityFilter] = useState<
     "all" | "high" | "medium" | "low"
   >("all");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const {
     data = [],
@@ -35,6 +36,12 @@ const TasksList = ({ filter, date }: Props) => {
         filter === "pending" ? !task.completed : task.completed,
       )
       .filter((task: todoType) => {
+        if (!searchQuery.trim()) return true;
+        return task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          task.description.toLowerCase().includes(searchQuery.toLowerCase());
+      })
+      .filter((task: todoType) => {
+        if(searchQuery.trim()) return true;
         if (!date) return true;
 
         const taskDate = new Date(task.date);
@@ -44,9 +51,9 @@ const TasksList = ({ filter, date }: Props) => {
         if (priorityFilter === "all") return true;
         return task.priority.toLowerCase() === priorityFilter;
       });
-  }, [data, filter, date, priorityFilter]);
+  }, [data, filter, date, priorityFilter, searchQuery]);
 
-  let content
+  let content;
 
   if (isLoading) {
     content = (
@@ -75,7 +82,8 @@ const TasksList = ({ filter, date }: Props) => {
   if (filteredData.length === 0) {
     content = (
       <div className="col-span-2 text-center text-zinc-500 mt-10">
-        No {filter} tasks {date ? `for selected date with ${priorityFilter} priority` : ""}.
+        No {filter} tasks{" "}
+        {date ? `for selected date with ${priorityFilter} priority` : ""}.
       </div>
     );
   }
@@ -83,7 +91,7 @@ const TasksList = ({ filter, date }: Props) => {
   return (
     <div className=" col-span-2 flex-1 overflow-y-auto space-y-3">
       <div className="flex items-center justify-between my-4 px-2 gap-2">
-        <SearchBar />
+        <SearchBar value={searchQuery} onChange={setSearchQuery} />
         <div className="flex items-center gap-4">
           <span className="text-sm text-zinc-500 dark:text-white">
             Filter:{" "}
@@ -93,7 +101,6 @@ const TasksList = ({ filter, date }: Props) => {
             onPriorityChange={setPriorityFilter}
           />
         </div>
-        
       </div>
       {content}
       {filteredData.map((task: todoType) => (

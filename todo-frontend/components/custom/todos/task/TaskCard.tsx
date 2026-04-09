@@ -9,8 +9,12 @@ import { deleteTodo, updateTodo } from "@/lib/api/Todo";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { isPastDate } from "@/utils/isPastDate";
+import { Badge } from "@/components/ui/badge";
+import { MdWork } from "react-icons/md";
+import { IoPerson } from "react-icons/io5";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 
-const TaskCard = ({ task, date }: { task: todoType; date?: Date }) => {
+const TaskCard = ({ task }: { task: todoType }) => {
   const [edit, setEdit] = useState(false);
   const queryClient = useQueryClient();
 
@@ -48,29 +52,62 @@ const TaskCard = ({ task, date }: { task: todoType; date?: Date }) => {
 
   return (
     <>
-      <div className="group p-4 rounded-xl border flex items-center justify-between hover:shadow-sm transition">
+      <div className="group max-h-72 overflow-y-auto p-4 rounded-xl border flex items-start justify-between hover:shadow-sm transition">
         <div className="flex flex-col gap-2">
-          <p className="font-medium text-lg group-hover:text-black dark:group-hover:text-white">
-            Title: {task.title}
+          <p className="font-bold text-xl text-zinc-900 dark:text-zinc-100">
+            <span className="font-semibold text-zinc-600 dark:text-zinc-400 mr-1">
+              Title:
+            </span>
+            {task.title}
           </p>
 
-          <p className="text-sm text-zinc-500 group-hover:text-zinc-700 dark:group-hover:text-zinc-300">
-            Description: {task.description}
+          <p className="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+            <span className="font-semibold text-zinc-500 dark:text-zinc-400">
+              Description:
+            </span>{" "}
+            {task.description}
           </p>
-          <p className="text-xs text-zinc-400 group-hover:text-zinc-500 dark:group-hover:text-zinc-400">
-            Priority:{" "}
-            <span
-              className={
-                task.priority === "high"
-                  ? "text-red-500 uppercase"
-                  : task.priority === "medium"
-                    ? "text-yellow-500 uppercase"
-                    : "text-green-500 uppercase"
-              }
+
+          <p className="text-xs text-zinc-400">
+            <span className="font-medium text-zinc-500">Created:</span>{" "}
+            {new Date(task.date).toLocaleDateString()}
+          </p>
+
+          <p className="text-xs flex items-center gap-2">
+            <span className="font-medium text-zinc-500">Priority:</span>
+
+            <Badge
+              className={`px-2 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wide
+                          ${
+                            task.priority === "high"
+                              ? "py-1 bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400"
+                              : task.priority === "medium"
+                                ? "py-1 bg-yellow-100 text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-400"
+                                : "py-1 bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400"
+                          }`}
             >
               {task.priority}
-            </span>
+            </Badge>
           </p>
+
+          <p className="text-xs flex items-center gap-2">
+            <span className="font-medium text-zinc-500">Priority:</span>
+
+            <Badge
+              variant="secondary"
+              className={`px-2 py-0.5 rounded-full text-xs bg-zinc-200 dark:bg-zinc-700 font-semibold uppercase tracking-wide`}
+            >
+              {task.category === "work" ? (
+                <MdWork />
+              ) : task.category === "personal" ? (
+                <IoPerson />
+              ) : task.category === "shopping" ? (
+                <AiOutlineShoppingCart />
+              ) : null}{" "}
+              {task.category}
+            </Badge>
+          </p>
+
           {!task.completed && (
             <div className="mt-4 flex gap-4">
               <Switch
@@ -78,13 +115,15 @@ const TaskCard = ({ task, date }: { task: todoType; date?: Date }) => {
                 onClick={handleMarkComplete}
                 disabled={isPast}
               />
-              <Label htmlFor="mark-complete">Mark as Complete</Label>
+              <Label className="text-sm text-zinc-600 dark:text-zinc-300">
+                Mark as Complete
+              </Label>
             </div>
           )}
           {task.completed && (
-            <div className="mt-4 flex gap-4">
+            <div className="mt-4 flex items-center gap-4">
               <div className="h-4 w-4 rounded-full bg-green-500"></div>
-              <Label htmlFor="mark-complete" className="text-zinc-500">
+              <Label className="text-sm text-zinc-500  dark:text-white">
                 Completed
               </Label>
             </div>
@@ -92,7 +131,7 @@ const TaskCard = ({ task, date }: { task: todoType; date?: Date }) => {
         </div>
         <div className="flex flex-col gap-2">
           {!task.completed && (
-            <div className="flex justify-between gap-2">
+            <div className="flex items-center gap-2">
               {" "}
               <Button
                 variant="outline"

@@ -8,24 +8,26 @@ import { formatDate } from "@/utils/formatDate";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import PrioritySelect from "./PrioritySelect";
+import CategorySelect from "./CategorySelect";
 
 type Props = {
   setOpen: (open: boolean) => void;
   selectedDate?: Date;
 };
 
-const CreateTaskForm = ({  setOpen, selectedDate }: Props) => {
+const CreateTaskForm = ({ setOpen, selectedDate }: Props) => {
   const queryClient = useQueryClient();
 
   const formattedDate = formatDate(selectedDate || new Date());
 
   const [formData, setFormData] = useState<todoType>({
-    _id:  "",
-    title:  "",
-    description:  "",
-    completed:  false,
-    date:  formattedDate,
+    _id: "",
+    title: "",
+    description: "",
+    completed: false,
+    date: formattedDate,
     priority: "",
+    category: "",
   });
 
   const mutation = useMutation({
@@ -55,7 +57,14 @@ const CreateTaskForm = ({  setOpen, selectedDate }: Props) => {
       ...formData,
       priority: value,
     });
-    console.log(formData.priority)
+    console.log(formData.priority);
+  };
+
+  const handleCategoryChange = (value: string) => {
+    setFormData({
+      ...formData,
+      category: value,
+    });
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -90,14 +99,20 @@ const CreateTaskForm = ({  setOpen, selectedDate }: Props) => {
         <Textarea
           name="description"
           placeholder="Task description"
-          className="mb-4"
+          className="mb-4 max-h-48 overflow-y-auto"
           value={formData.description}
           onChange={handleChange}
         />
-        <PrioritySelect
-          value={formData?.priority}
-          onChange={handlePriorityChange}
-        />
+        <div className="flex gap-4">
+          <PrioritySelect
+            value={formData.priority}
+            onChange={handlePriorityChange}
+          />
+          <CategorySelect
+            value={formData.category}
+            onChange={handleCategoryChange}
+          />
+        </div>
         <Button
           type="submit"
           disabled={mutation.isPending}

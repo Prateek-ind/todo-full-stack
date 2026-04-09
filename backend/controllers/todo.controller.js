@@ -2,7 +2,7 @@ const todoModel = require("../model/todoModel");
 
 const CreateTodo = async (req, res) => {
   try {
-    const { title, description, completed, date, priority } = req.body;
+    const { title, description, completed, date, priority, category } = req.body;
     if (!title) {
       return res.status(400).json({
         message: "Title is required",
@@ -16,6 +16,7 @@ const CreateTodo = async (req, res) => {
       date: date || new Date().toISOString(),
       user: req.user.id,
       priority,
+      category,
     });
 
      res.status(201).json({

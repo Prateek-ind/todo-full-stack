@@ -5,4 +5,5 @@ export type todoType = {
   completed: boolean;
   date: string;
   priority: string;
+  category: string;
 };
