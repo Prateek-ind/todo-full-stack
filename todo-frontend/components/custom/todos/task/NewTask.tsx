@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
   Dialog,
   DialogContent,
@@ -7,7 +7,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-import NewTaskForm from "./TaskForm";
+import NewTaskForm from "./CreateTaskForm";
 
 type NewTaskProps = {
   open: boolean;
@@ -18,10 +18,10 @@ type NewTaskProps = {
 const NewTask = ({ open, setOpen, date }: NewTaskProps) => {
   return (
     <>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="[&>button]:cursor-pointer">
+      <Dialog open={open} onOpenChange={setOpen} >
+        <DialogContent className="[&>button]:cursor-pointer w-full max-w-3xl">
           <DialogHeader>
-            <DialogTitle>Create new task</DialogTitle>
+            <DialogTitle className="text-xl font-semibold uppercase">Create new task</DialogTitle>
             <DialogDescription>
               Add a task to stay organized and keep track of your work.
             </DialogDescription>

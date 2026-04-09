@@ -23,7 +23,18 @@ const todoSchema = new mongoose.Schema(
     date: {
       type: Date,
       required: true,
-    }
+    },
+    priority: {
+      type: String,
+      enum: ["low", "medium", "high"],
+      default: "medium",
+      required: true,
+    },
+    category: {
+      type: String,
+      enum: ["work", "personal", "shopping", "others"],
+      trim: true,
+    },
   },
   { timestamps: true },
 );
