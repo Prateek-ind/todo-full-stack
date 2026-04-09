@@ -29,8 +29,8 @@ const Register = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
+      secure: true,
+      sameSite: "none",
     });
 
     res.status(201).json({
@@ -96,8 +96,8 @@ const Login = async (req, res) => {
 const Logout = (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
-    secure: false,
-    sameSite: "lax",
+    secure: true,
+    sameSite: "none",
   });
   res.status(200).json({
     message: "Logged out successfully",
