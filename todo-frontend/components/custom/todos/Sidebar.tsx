@@ -1,8 +1,11 @@
 "use client"
 
+type Props = {
+    filter: string;
+    setFilter: (filter: string) => void;
+}
 
-
-const TodosSidebar = ( {filter, setFilter}: React.SetStateAction) => {
+const Sidebar = ( {filter, setFilter}: Props) => {
 
   return (
      <div className='col-span-1 bg-white dark:bg-zinc-800 rounded-2xl p-4 shadow-sm flex flex-col gap-4'>
@@ -28,4 +31,4 @@ const TodosSidebar = ( {filter, setFilter}: React.SetStateAction) => {
   )
 }
 
-export default TodosSidebar
+export default Sidebar
