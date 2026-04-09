@@ -40,7 +40,7 @@ const Register = async (req, res) => {
       token: token,
     });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).json({
       message: "User Registration failed",
     });
@@ -75,10 +75,9 @@ const Login = async (req, res) => {
 
     res.cookie("token", generateToken(user._id), {
       httpOnly: true,
-      secure: false,  
-     sameSite: "lax",
-    })
-
+      secure: true,
+      sameSite: "none",
+    });
 
     res.json(200).json({
       message: "Login successful",
@@ -103,6 +102,5 @@ const Logout = (req, res) => {
     message: "Logged out successfully",
   });
 };
-
 
 module.exports = { Register, Login, Logout };
