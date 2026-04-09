@@ -10,24 +10,22 @@ import { useState } from "react";
 import PrioritySelect from "./PrioritySelect";
 
 type Props = {
-  initialData?: todoType;
-  isEdit?: boolean;
   setOpen: (open: boolean) => void;
   selectedDate?: Date;
 };
 
-const CreateTaskForm = ({ initialData, setOpen, selectedDate }: Props) => {
+const CreateTaskForm = ({  setOpen, selectedDate }: Props) => {
   const queryClient = useQueryClient();
 
   const formattedDate = formatDate(selectedDate || new Date());
 
   const [formData, setFormData] = useState<todoType>({
-    _id: initialData?._id || "",
-    title: initialData?.title || "",
-    description: initialData?.description || "",
-    completed: initialData?.completed || false,
-    date: initialData?.date || formattedDate,
-    priority: initialData?.priority || "Medium",
+    _id:  "",
+    title:  "",
+    description:  "",
+    completed:  false,
+    date:  formattedDate,
+    priority: "",
   });
 
   const mutation = useMutation({
@@ -57,6 +55,7 @@ const CreateTaskForm = ({ initialData, setOpen, selectedDate }: Props) => {
       ...formData,
       priority: value,
     });
+    console.log(formData.priority)
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -74,6 +73,7 @@ const CreateTaskForm = ({ initialData, setOpen, selectedDate }: Props) => {
       alert("Please select a valid date");
       return;
     }
+    console.log(formData);
     mutation.mutate(formData as todoType);
   };
   return (

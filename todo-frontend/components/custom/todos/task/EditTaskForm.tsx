@@ -27,7 +27,7 @@ const TaskForm = ({ initialData, isEdit, setOpen, selectedDate }: Props) => {
     description: initialData?.description || "",
     completed: initialData?.completed || false,
     date: initialData?.date || formattedDate,
-    priority: initialData?.priority || "Medium",
+    priority: initialData?.priority || "medium",
   });
 
   const mutation = useMutation({

@@ -8,6 +8,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteTodo, updateTodo } from "@/lib/api/Todo";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { isPastDate } from "@/utils/isPastDate";
 
 const TaskCard = ({ task, date }: { task: todoType; date?: Date }) => {
   const [edit, setEdit] = useState(false);
@@ -43,8 +44,7 @@ const TaskCard = ({ task, date }: { task: todoType; date?: Date }) => {
     markCompleteMutation.mutate(task._id);
   };
 
-  const isValid = date ? new Date(task.date) === date : true
-
+  const isPast = isPastDate(task.date);
 
   return (
     <>
@@ -53,18 +53,31 @@ const TaskCard = ({ task, date }: { task: todoType; date?: Date }) => {
           <p className="font-medium text-lg group-hover:text-black dark:group-hover:text-white">
             Title: {task.title}
           </p>
-          
+
           <p className="text-sm text-zinc-500 group-hover:text-zinc-700 dark:group-hover:text-zinc-300">
             Description: {task.description}
           </p>
           <p className="text-xs text-zinc-400 group-hover:text-zinc-500 dark:group-hover:text-zinc-400">
-            Priority: <span className={task.priority === "High" ? "text-red-500" : task.priority === "Medium" ? "text-yellow-500" : "text-green-500"}>
+            Priority:{" "}
+            <span
+              className={
+                task.priority === "high"
+                  ? "text-red-500 uppercase"
+                  : task.priority === "medium"
+                    ? "text-yellow-500 uppercase"
+                    : "text-green-500 uppercase"
+              }
+            >
               {task.priority}
             </span>
           </p>
           {!task.completed && (
             <div className="mt-4 flex gap-4">
-              <Switch id="mark-complete" onClick={handleMarkComplete} disabled={!isValid} />
+              <Switch
+                id="mark-complete"
+                onClick={handleMarkComplete}
+                disabled={isPast}
+              />
               <Label htmlFor="mark-complete">Mark as Complete</Label>
             </div>
           )}
@@ -86,7 +99,7 @@ const TaskCard = ({ task, date }: { task: todoType; date?: Date }) => {
                 size="sm"
                 className="cursor-pointer"
                 onClick={handleEdit}
-                disabled={isValid}
+                disabled={isPast}
               >
                 Edit
               </Button>
@@ -95,7 +108,7 @@ const TaskCard = ({ task, date }: { task: todoType; date?: Date }) => {
                 size="sm"
                 className="cursor-pointer"
                 onClick={handleDelete}
-                disabled={isValid}
+                disabled={isPast}
               >
                 Delete
               </Button>
