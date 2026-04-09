@@ -104,7 +104,7 @@ const TasksList = ({ filter, date }: Props) => {
       </div>
       {content}
       {filteredData.map((task: todoType) => (
-        <TaskCard key={task._id} task={task} date={date} />
+        <TaskCard key={task._id} task={task} />
       ))}
     </div>
   );
