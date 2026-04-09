@@ -1,18 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./Header";
 import TasksList from "./TasksList";
 import TodosSidebar from "./Sidebar";
-import CalendersContainer from "./CalendersContainer";
+import CalendersContainer from "../CalendersContainer";
 
 const TodosClient = () => {
   const [filter, setFilter] = useState<"pending" | "completed">("pending");
-  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [date, setDate] = useState<Date | undefined>(undefined);
+
+  useEffect(() => {
+    setDate(new Date());
+  }, []);
 
   return (
     <>
-      <Header />
+      <Header date={date} />
 
       <div className="grid grid-cols-4 gap-6 h-[calc(100%-80px)]">
         <TodosSidebar filter={filter} setFilter={setFilter} />

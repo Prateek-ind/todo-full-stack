@@ -2,33 +2,37 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { createTodo, updateTodo } from "@/lib/api/Todo";
+import { createTodo } from "@/lib/api/Todo";
 import { todoType } from "@/types/todoType";
+import { formatDate } from "@/utils/formatDate";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import PrioritySelect from "./PrioritySelect";
+import CategorySelect from "./CategorySelect";
 
 type Props = {
-  initialData?: todoType;
-  isEdit?: boolean;
   setOpen: (open: boolean) => void;
+  selectedDate?: Date;
 };
 
-const TaskForm = ({ initialData, isEdit, setOpen }: Props) => {
+const CreateTaskForm = ({ setOpen, selectedDate }: Props) => {
   const queryClient = useQueryClient();
- 
 
- 
-   const [formData, setFormData] = useState<todoType>({
-    _id: initialData?._id || "",
-    title: initialData?.title || "",
-    description: initialData?.description || "",
-    completed: initialData?.completed || false,
-    date: initialData?.date || new Date().toISOString(),
+  const formattedDate = formatDate(selectedDate || new Date());
+
+  const [formData, setFormData] = useState<todoType>({
+    _id: "",
+    title: "",
+    description: "",
+    completed: false,
+    date: formattedDate,
+    priority: "",
+    category: "",
   });
 
   const mutation = useMutation({
     mutationFn: async (data: todoType) => {
-      return isEdit ? await updateTodo(data._id, data) : await createTodo(data);
+      return await createTodo(data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["todos"] });
@@ -48,8 +52,37 @@ const TaskForm = ({ initialData, isEdit, setOpen }: Props) => {
     });
   };
 
+  const handlePriorityChange = (value: string) => {
+    setFormData({
+      ...formData,
+      priority: value,
+    });
+    console.log(formData.priority);
+  };
+
+  const handleCategoryChange = (value: string) => {
+    setFormData({
+      ...formData,
+      category: value,
+    });
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!selectedDate) return;
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const chosenDate = new Date(selectedDate);
+    chosenDate.setHours(0, 0, 0, 0);
+
+    if (chosenDate < today) {
+      alert("Please select a valid date");
+      return;
+    }
+    console.log(formData);
     mutation.mutate(formData as todoType);
   };
   return (
@@ -66,26 +99,30 @@ const TaskForm = ({ initialData, isEdit, setOpen }: Props) => {
         <Textarea
           name="description"
           placeholder="Task description"
-          className="mb-4"
+          className="mb-4 max-h-48 overflow-y-auto"
           value={formData.description}
           onChange={handleChange}
         />
+        <div className="flex gap-4">
+          <PrioritySelect
+            value={formData.priority}
+            onChange={handlePriorityChange}
+          />
+          <CategorySelect
+            value={formData.category}
+            onChange={handleCategoryChange}
+          />
+        </div>
         <Button
           type="submit"
           disabled={mutation.isPending}
           className="bg-zinc-900 text-white dark:bg-zinc-50 dark:text-zinc-900 hover:scale-105 px-4 py-2 rounded-lg cursor-pointer"
         >
-          {mutation.isPending
-            ? isEdit
-              ? "Updating..."
-              : "Creating..."
-            : isEdit
-              ? "Update Task"
-              : "Create Task"}
+          {mutation.isPending ? "Creating..." : "Create Task"}
         </Button>
       </form>
     </>
   );
 };
 
-export default TaskForm;
+export default CreateTaskForm;

@@ -30,6 +30,7 @@ export const createTodo = async (todo: todoType) => {
             throw new Error("Failed to create todo");
         }
         const data = await response.json();
+        
         return data;
     } catch (error) {
         console.error("Error creating todo:", error);
