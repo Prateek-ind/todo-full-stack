@@ -2,11 +2,16 @@ import { todoType } from "@/types/todoType";
 
 export const getTodos = async () => {
     try {
+        console.log("Fetching todos from:", process.env.NEXT_PUBLIC_BASE_URL);
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/todos`, {
             credentials: "include"
         });
+        console.log("Todos response status:", response.status);
+        
         if(!response.ok) {
-            throw new Error("Failed to fetch todos");
+            const errorData = await response.json();
+            console.error("Get todos error:", errorData);
+            throw new Error(errorData.message || "Failed to fetch todos");
         }
         const data = await response.json();
         return data.todos;

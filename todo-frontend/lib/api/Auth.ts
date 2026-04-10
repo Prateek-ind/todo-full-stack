@@ -1,6 +1,7 @@
 export const login = async (  email: string, password: string ) => {
     const payload = { email, password };
     try {
+        console.log("Logging in with:", email);
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`, {   
             method: "POST",
             headers: {
@@ -10,10 +11,15 @@ export const login = async (  email: string, password: string ) => {
             credentials: "include"
         });
         
+        console.log("Login response status:", response.status);
+        
         if(!response.ok) {
-            throw new Error("Failed to login");
+            const errorData = await response.json();
+            console.error("Login error:", errorData);
+            throw new Error(errorData.message || "Failed to login");
         }
         const data = await response.json();
+        console.log("Login successful:", data);
         return data;
     } catch (error) {
         console.error("Error logging in:", error);

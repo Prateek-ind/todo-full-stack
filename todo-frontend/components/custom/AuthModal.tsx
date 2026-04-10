@@ -68,10 +68,13 @@ const AuthModal = ({ open, setOpen }: any) => {
       await mutation.mutateAsync();
       setOpen(false);
       setError("");
+      // Wait for cookies to be set properly
       setTimeout(() => {
         router.push("/todos");
-      }, 300);
+        router.refresh(); // Refresh server component to pick up new cookies
+      }, 500);
     } catch (error: any) {
+      console.error("Auth error:", error);
       setError(error.message || "Something went wrong");
     } finally {
       setLoading(false);
