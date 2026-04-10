@@ -68,16 +68,15 @@ const AuthModal = ({ open, setOpen }: any) => {
       await mutation.mutateAsync();
       setOpen(false);
       setError("");
-      router.push("/todos");
+      setTimeout(() => {
+        router.push("/todos");
+      }, 300);
     } catch (error: any) {
       setError(error.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
   };
-
-
-
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
