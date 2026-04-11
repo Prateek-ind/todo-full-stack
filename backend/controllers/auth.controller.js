@@ -31,6 +31,7 @@ const Register = async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: "none",
+      path: "/",
     });
 
     res.status(201).json({
@@ -77,6 +78,7 @@ const Login = async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: "none",
+      path: "/",
     });
 
     res.status(200).json({
@@ -97,6 +99,7 @@ const Logout = (req, res) => {
     httpOnly: true,
     secure: true,
     sameSite: "none",
+    path: "/",
   });
   res.status(200).json({
     message: "Logged out successfully",
