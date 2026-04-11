@@ -14,9 +14,6 @@ const allowedOrigins = [
   process.env.FRONTEND_URL,
 ];
 
-
-
-
 app.use(express.json());
 app.use(cookieParser());
 
@@ -24,7 +21,7 @@ app.set("trust proxy", 1);
 
 app.use(
   cors({
-    origin: allowedOrigins[2],
+    origin: allowedOrigins[0],
     credentials: true,
   }),
 );
