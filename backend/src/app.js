@@ -14,6 +14,12 @@ const allowedOrigins = [
   process.env.FRONTEND_URL,
 ];
 
+
+
+
+app.use(express.json());
+app.use(cookieParser());
+
 app.set("trust proxy", 1);
 
 app.use(
@@ -29,8 +35,6 @@ app.use(
     credentials: true,
   }),
 );
-app.use(express.json());
-app.use(cookieParser());
 
 // Logging middleware for debugging
 app.use((req, res, next) => {

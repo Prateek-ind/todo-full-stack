@@ -13,7 +13,7 @@ const protect = (req, res, next) => {
         req.user = decoded;
         next();
     } catch (error) {
-        res.status(401).json({
+        return res.status(401).json({
             message: "Invalid token"
         })
     }
