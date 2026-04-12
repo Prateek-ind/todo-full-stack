@@ -78,9 +78,6 @@ const Login = async (req, res) => {
       secure: true,
       sameSite: "none",
       path: "/",
-    }).json({
-      message: "Login successful",
-      token
     })
 
     res.status(200).json({
@@ -88,6 +85,7 @@ const Login = async (req, res) => {
       _id: user._id,
       username: user.username,
       email: user.email,
+      token,
     });
   } catch (error) {
     res.status(500).json({
