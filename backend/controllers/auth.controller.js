@@ -4,7 +4,6 @@ const generateToken = require("../utils/generateToken");
 const Register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
-
     if (!username || !email || !password) {
       return res.status(400).json({
         message: "All fields are required",
@@ -79,7 +78,10 @@ const Login = async (req, res) => {
       secure: true,
       sameSite: "none",
       path: "/",
-    });
+    }).json({
+      message: "Login successful",
+      token
+    })
 
     res.status(200).json({
       message: "Login successful",

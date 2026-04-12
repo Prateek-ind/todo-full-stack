@@ -8,7 +8,6 @@ export const login = async (  email: string, password: string ) => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(payload),
-            credentials: "include"
         });
         
         console.log("Login response status:", response.status);
@@ -37,7 +36,6 @@ export const register = async (  username: string, email: string, password: stri
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(payload),
-            credentials: "include"
         });
         if(!response.ok) {
             throw new Error("Failed to register");
@@ -54,12 +52,12 @@ export const logout = async () => {
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/logout`, {
             method: "POST",
-            credentials: "include"
         });
         if (!response.ok) {
             throw new Error("Failed to logout");
         }
         const data = await response.json();
+        localStorage.removeItem("token");
         return data;
     } catch (error) {
         console.error("Error logging out:", error);
