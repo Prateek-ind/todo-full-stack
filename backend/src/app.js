@@ -17,7 +17,7 @@ const allowedOrigins = ["http://localhost:3000", process.env.FRONTEND_URL];
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: "https://todo-full-stack-alpha.vercel.app",
     credentials: true,
   }),
 );

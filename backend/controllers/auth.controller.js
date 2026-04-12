@@ -29,7 +29,7 @@ const Register = async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: true,
-      sameSite: "lax",
+      sameSite: "none",
       path: "/",
     });
 
@@ -76,7 +76,7 @@ const Login = async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: true,
-      sameSite: "lax",
+      sameSite: "none",
       path: "/",
     })
 
@@ -98,7 +98,7 @@ const Logout = (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
     secure: true,
-    sameSite: "lax",
+    sameSite: "none",
     path: "/",
   });
   res.status(200).json({
