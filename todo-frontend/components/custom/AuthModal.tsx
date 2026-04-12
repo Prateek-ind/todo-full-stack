@@ -68,7 +68,6 @@ const AuthModal = ({ open, setOpen }: any) => {
       await mutation.mutateAsync();
       setOpen(false);
       setError("");
-      router.refresh();
       router.push("/todos");
     } catch (error: any) {
       console.error("Auth error:", error);

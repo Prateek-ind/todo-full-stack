@@ -58,7 +58,7 @@ const Login = async (req, res) => {
     }
 
     const user = await userModel.findOne({ email });
-
+    console.log("User found:", user);
     if (!user) {
       return res.status(401).json({
         message: "Invalid credentials, please try again",
@@ -72,8 +72,8 @@ const Login = async (req, res) => {
         message: "Invalid credentials, please try again",
       });
     }
-
-    res.cookie("token", generateToken(user._id), {
+    const token = generateToken(user._id);
+    res.cookie("token", token, {
       httpOnly: true,
       secure: true,
       sameSite: "lax",
@@ -85,7 +85,7 @@ const Login = async (req, res) => {
       _id: user._id,
       username: user.username,
       email: user.email,
-      token,
+      token: token,
     });
   } catch (error) {
     res.status(500).json({

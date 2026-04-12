@@ -8,24 +8,19 @@ const protect = require("../middlewares/protect.middleware");
 
 const app = express();
 
-const allowedOrigins = [
-  "https://todo-full-stack-alpha.vercel.app",
-  "http://localhost:3000",
-  process.env.FRONTEND_URL,
-];
-
 app.use(express.json());
 app.use(cookieParser());
 
 app.set("trust proxy", 1);
 
+const allowedOrigins = ["http://localhost:3000", process.env.FRONTEND_URL];
+
 app.use(
   cors({
-    origin: allowedOrigins[0],
+    origin: process.env.FRONTEND_URL,
     credentials: true,
   }),
 );
-
 // Logging middleware for debugging
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.path} - Origin: ${req.headers.origin}`);
