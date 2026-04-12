@@ -65,11 +65,10 @@ const AuthModal = ({ open, setOpen }: any) => {
     setLoading(true);
     setError("");
     try {
-      const data = await mutation.mutateAsync();
-      localStorage.setItem("token", data.token);
+      await mutation.mutateAsync();
       setOpen(false);
       setError("");
-      await router.refresh();
+      router.refresh();
       router.push("/todos");
     } catch (error: any) {
       console.error("Auth error:", error);

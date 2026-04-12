@@ -29,7 +29,7 @@ const Register = async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: true,
-      sameSite: "none",
+      sameSite: "lax",
       path: "/",
     });
 
@@ -37,7 +37,7 @@ const Register = async (req, res) => {
       message: "User created",
       username: user.username,
       email: user.email,
-      token: token,
+      token,
     });
   } catch (error) {
     console.log(error);
@@ -76,7 +76,7 @@ const Login = async (req, res) => {
     res.cookie("token", generateToken(user._id), {
       httpOnly: true,
       secure: true,
-      sameSite: "none",
+      sameSite: "lax",
       path: "/",
     })
 
@@ -98,7 +98,7 @@ const Logout = (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
     secure: true,
-    sameSite: "none",
+    sameSite: "lax",
     path: "/",
   });
   res.status(200).json({
