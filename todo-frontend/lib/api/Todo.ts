@@ -1,16 +1,19 @@
 import { todoType } from "@/types/todoType";
 
+// Helper function to get auth headers
+
+
 export const getTodos = async () => {
     try {
-        const token = localStorage.getItem("token");
         console.log("Fetching todos from:", process.env.NEXT_PUBLIC_BASE_URL);
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/todos`, {
+            credentials: "include",
             headers: {
-                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
             }
         });
         console.log("Todos response status:", response.status);
-        
+
         if(!response.ok) {
             const errorData = await response.json();
             console.error("Get todos error:", errorData);
@@ -26,13 +29,13 @@ export const getTodos = async () => {
 
 export const createTodo = async (todo: todoType) => {    
     try {
-        const token = localStorage.getItem("token");
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/todos/create`, {
             method: "POST",
             headers: {
-                Authorization: `Bearer ${token}`, 
-                     },
+                "Content-Type": "application/json",
+            },
             body: JSON.stringify(todo),
+            credentials: "include"
         });
         if(!response.ok) {
             throw new Error("Failed to create todo");
@@ -48,14 +51,13 @@ export const createTodo = async (todo: todoType) => {
 
 export const updateTodo = async (id: string, todo: todoType) => {
     try {
-        const token = localStorage.getItem("token");
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/todos/${id}`, {
             method: "PATCH",
             headers: {
-                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
             },
             body: JSON.stringify(todo),
-           
+            credentials: "include"
         });
         if(!response.ok) {
             throw new Error("Failed to update todo");
@@ -70,12 +72,9 @@ export const updateTodo = async (id: string, todo: todoType) => {
 
 export const deleteTodo = async (id: string) => {
     try {
-        const token = localStorage.getItem("token");
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/todos/${id}`, {
             method: "DELETE",
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
+            credentials: "include"
         });
         if(!response.ok) {
             throw new Error("Failed to delete todo");
