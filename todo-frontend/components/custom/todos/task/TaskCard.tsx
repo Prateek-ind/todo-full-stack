@@ -13,9 +13,11 @@ import { Badge } from "@/components/ui/badge";
 import { MdWork } from "react-icons/md";
 import { IoPerson } from "react-icons/io5";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import TaskDetailsModal from "./TaskDetailsModal";
 
 const TaskCard = ({ task }: { task: todoType }) => {
   const [edit, setEdit] = useState(false);
+  const [openTaskDetails, setOpenTaskDetails] = useState(false)
   const queryClient = useQueryClient();
 
   const deleteMutation = useMutation({
@@ -52,7 +54,9 @@ const TaskCard = ({ task }: { task: todoType }) => {
 
   return (
     <>
-      <div className="group max-h-72 overflow-y-auto p-4 rounded-xl border flex items-start justify-between hover:shadow-sm transition">
+      <div className="group max-h-72 overflow-y-auto p-4 rounded-xl border flex items-start justify-between hover:shadow-sm transition"
+      onClick={()=>setOpenTaskDetails(true)}
+      >
         <div className="flex flex-col gap-2">
           <p className="font-bold text-xl text-zinc-900 dark:text-zinc-100">
             <span className="font-semibold text-zinc-600 dark:text-zinc-400 mr-1">
@@ -108,6 +112,21 @@ const TaskCard = ({ task }: { task: todoType }) => {
             </Badge>
           </p>
 
+          {!task.completed && <p className="text-xs flex items-center gap-2">
+            <span className="font-medium text-zinc-500">Status: </span>
+
+            <Badge
+              className={`px-2 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wide
+                          ${
+                            task.completed === false
+                              ? "py-1 bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400"
+                              : null
+                          }`}
+            >
+              {task.completed === false ? "Pending" : "Completed"}
+            </Badge>
+          </p>}
+
           {!task.completed && (
             <div className="mt-4 flex gap-4">
               <Switch
@@ -156,6 +175,7 @@ const TaskCard = ({ task }: { task: todoType }) => {
         </div>
       </div>
       <UpdateTask task={task} open={edit} setOpen={setEdit} />
+      <TaskDetailsModal task={task} open={openTaskDetails} setOpen={setOpenTaskDetails}/>
     </>
   );
 };

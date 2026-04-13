@@ -1,5 +1,14 @@
 "use client";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type Props = {
   priority: "all" | "high" | "medium" | "low";
@@ -8,31 +17,19 @@ type Props = {
 
 export function PriorityFilter({ priority, onPriorityChange }: Props) {
   return (
-    <ToggleGroup
-      type="single"
-      size="sm"
-      variant="outline"
-      value={priority}
-      onValueChange={(value) => {
-        if (!value) {
-          onPriorityChange("all");
-        } else{
-          onPriorityChange(value as Props["priority"]);
-        }
-      }}
-    >
-      <ToggleGroupItem value="all" aria-label="Toggle all">
-        All
-      </ToggleGroupItem>
-      <ToggleGroupItem value="low" aria-label="Toggle low">
-        Low
-      </ToggleGroupItem>
-      <ToggleGroupItem value="medium" aria-label="Toggle medium">
-        Medium
-      </ToggleGroupItem>
-      <ToggleGroupItem value="high" aria-label="Toggle high">
-        High
-      </ToggleGroupItem>
-    </ToggleGroup>
+    <Select value={priority} onValueChange={onPriorityChange}>
+      <SelectTrigger className="w-32 max-w-xs ">
+        <SelectValue className="text-zinc-500" placeholder="Select priority" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectLabel>Priority</SelectLabel>
+          <SelectItem defaultChecked value="all">Priority: All</SelectItem>
+          <SelectItem value="low">Priority: Low</SelectItem>
+          <SelectItem value="medium">Priority: Medium</SelectItem>
+          <SelectItem value="high">Priority: High</SelectItem>
+        </SelectGroup>
+      </SelectContent>
+    </Select>
   );
 }

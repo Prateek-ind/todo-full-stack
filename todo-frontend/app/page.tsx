@@ -1,16 +1,11 @@
 "use client";
 
-import AuthModal from "@/components/custom/AuthModal";
+import AuthButton from "@/components/custom/AuthButton";
 import HeroCard from "@/components/custom/HeroCard";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
+
 
 export default function Home() {
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => {
-    setOpen(!open);
-  };
+  
 
   return (
     <div className="px-6 flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
@@ -31,19 +26,12 @@ export default function Home() {
             done without clutter.
           </p>
 
-          <div className="flex gap-4">
-            <Button
-              onClick={handleOpen}
-              className="rounded-xl py-2 px-6 cursor-pointer"
-            >
-              Register / Login
-            </Button>
-          </div>
+          <AuthButton/>
         </div>
 
         <HeroCard />
       </div>
-      <AuthModal open={open} setOpen={setOpen} />
+      
     </div>
   );
 }
