@@ -40,15 +40,20 @@ const TaskCard = ({ task }: { task: todoType }) => {
     },
   });
 
-  const handleEdit = () => {
-    setEdit(true);
-  };
-  const handleDelete = () => {
-    deleteMutation.mutate(task._id);
-  };
-  const handleMarkComplete = () => {
-    markCompleteMutation.mutate(task._id);
-  };
+  const handleEdit = (e: React.MouseEvent) => {
+  e.stopPropagation(); 
+  setEdit(true);
+};
+
+const handleDelete = (e: React.MouseEvent) => {
+  e.stopPropagation(); 
+  deleteMutation.mutate(task._id);
+};
+
+const handleMarkComplete = (e: React.MouseEvent) => {
+  e.stopPropagation(); 
+  markCompleteMutation.mutate(task._id);
+};
 
   const isPast = isPastDate(task.date);
 
