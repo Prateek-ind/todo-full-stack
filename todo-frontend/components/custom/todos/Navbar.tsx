@@ -22,7 +22,7 @@ const Header = () => {
   };
 
   return (
-    <div className=" flex items-center justify-between py-4 px-6">
+    <div className=" flex items-center justify-between py-4 px-6 bg-zinc-50 dark:bg-zinc-900">
       <h1 className="text-3xl font-semibold">TaskFlow</h1>
       <div className="flex gap-4">
         {isLoggedIn && (
