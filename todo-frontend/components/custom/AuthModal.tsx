@@ -12,10 +12,16 @@ import { Input } from "../ui/input";
 import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { login, register } from "@/lib/api/Auth";
+import { useAuth } from "../providers/AuthProvider";
 
 type AuthMode = "login" | "register";
 
-const AuthModal = ({ open, setOpen }: any) => {
+type Props = {
+  open: boolean,
+  setOpen: (val: boolean)=>void
+}
+
+const AuthModal = ({ open, setOpen }: Props) => {
   const [mode, setMode] = useState<AuthMode>("login");
   const [formData, setFormData] = useState({
     username: "",
@@ -26,6 +32,7 @@ const AuthModal = ({ open, setOpen }: any) => {
   const [error, setError] = useState("");
   const router = useRouter();
   const queryClient = useQueryClient();
+  const {setIsLoggedIn, setUsername}=useAuth()
 
   const mutation = useMutation({
     mutationFn: async () => {
@@ -65,9 +72,11 @@ const AuthModal = ({ open, setOpen }: any) => {
     setLoading(true);
     setError("");
     try {
-      await mutation.mutateAsync();
+      const data = await mutation.mutateAsync();
       setOpen(false);
       setError("");
+      setIsLoggedIn(true)
+      setUsername(data.username)
       router.push("/todos");
     } catch (error: any) {
       console.error("Auth error:", error);
@@ -119,7 +128,7 @@ const AuthModal = ({ open, setOpen }: any) => {
           <Button
             type="submit"
             disabled={loading}
-            className="w-full rounded-xl dark:text-white cursor-pointer hover:opacity-70"
+            className="w-full rounded-xl dark:text-black cursor-pointer hover:opacity-70"
           >
             {mode === "login" ? "Login" : "Register"}
           </Button>

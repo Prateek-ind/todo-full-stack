@@ -2,7 +2,7 @@ export const login = async (  email: string, password: string ) => {
     const payload = { email, password };
     try {
         console.log("Logging in with:", email);
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`, {   
+        const response = await fetch(`/api/auth/login`, {   
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -30,7 +30,7 @@ export const register = async (  username: string, email: string, password: stri
      
     const payload = { username, email, password };
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/register`, {
+        const response = await fetch(`/api/auth/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -50,7 +50,7 @@ export const register = async (  username: string, email: string, password: stri
 
 export const logout = async () => {
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/logout`, {
+        const response = await fetch(`/api/auth/logout`, {
             method: "POST",
         });
         if (!response.ok) {

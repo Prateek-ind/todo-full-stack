@@ -32,6 +32,12 @@ const Register = async (req, res) => {
       sameSite: "none",
       path: "/",
     });
+    res.cookie("username", user.username, {
+      httpOnly: false, 
+      secure: false,
+      sameSite: "none",
+      path: "/",
+    });
 
     res.status(201).json({
       message: "User created",
@@ -58,7 +64,7 @@ const Login = async (req, res) => {
     }
 
     const user = await userModel.findOne({ email });
-    console.log("User found:", user);
+    
     if (!user) {
       return res.status(401).json({
         message: "Invalid credentials, please try again",
@@ -79,6 +85,13 @@ const Login = async (req, res) => {
       sameSite: "none",
       path: "/",
     })
+
+    res.cookie("username", user.username, {
+      httpOnly: false, 
+      secure: true,
+      sameSite: "none",
+      path: "/",
+    });
 
     res.status(200).json({
       message: "Login successful",
@@ -101,6 +114,12 @@ const Logout = (req, res) => {
     sameSite: "none",
     path: "/",
   });
+  res.clearCookie("username", {
+      httpOnly: false, 
+      secure: true,
+      sameSite: "none",
+      path: "/",
+    });
   res.status(200).json({
     message: "Logged out successfully",
   });

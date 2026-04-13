@@ -7,13 +7,15 @@ import { todoType } from "@/types/todoType";
 import SearchBar from "./SearchBar";
 import { useMemo, useState } from "react";
 import { PriorityFilter } from "./PriorityFilter";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   filter: "pending" | "completed";
   date?: Date;
+  openNewTaskModel: ()=> void
 };
 
-const TasksList = ({ filter, date }: Props) => {
+const TasksList = ({openNewTaskModel, filter, date }: Props) => {
   const [priorityFilter, setPriorityFilter] = useState<
     "all" | "high" | "medium" | "low"
   >("all");
@@ -57,7 +59,7 @@ const TasksList = ({ filter, date }: Props) => {
 
   if (isLoading) {
     content = (
-      <div className="col-span-2 text-center text-zinc-500 mt-10">
+      <div className="md:col-span-2 text-center text-zinc-500 mt-10">
         Loading tasks...
       </div>
     );
@@ -65,7 +67,7 @@ const TasksList = ({ filter, date }: Props) => {
 
   if (isError) {
     content = (
-      <div className="col-span-2 text-center text-red-500 mt-10">
+      <div className="md:col-span-2 text-center text-red-500 mt-10">
         Error loading tasks: {(error as Error).message}
       </div>
     );
@@ -73,7 +75,7 @@ const TasksList = ({ filter, date }: Props) => {
 
   if (data.length === 0) {
     content = (
-      <div className="col-span-2 text-center text-zinc-500 mt-10">
+      <div className="md:col-span-2 text-center text-zinc-500 mt-10">
         No tasks yet. Start by creating one.
       </div>
     );
@@ -81,7 +83,7 @@ const TasksList = ({ filter, date }: Props) => {
 
   if (filteredData.length === 0) {
     content = (
-      <div className="col-span-2 text-center text-zinc-500 mt-10">
+      <div className="md:col-span-2 text-center text-zinc-500 mt-10">
         No {filter} tasks{" "}
         {date ? `for selected date with ${priorityFilter} priority` : ""}.
       </div>
@@ -89,10 +91,13 @@ const TasksList = ({ filter, date }: Props) => {
   }
 
   return (
-    <div className=" col-span-2 flex-1 overflow-y-auto space-y-3">
-      <div className="flex items-center justify-between my-4 px-2 gap-2">
-        <SearchBar value={searchQuery} onChange={setSearchQuery} />
-        <div className="flex items-center gap-4">
+    <div className="col-span-1 md:col-span-2 flex-1 overflow-y-auto space-y-3">
+      <div className="flex items-end md:items-center justify-between flex-col md:flex-row px-2 gap-2">
+        <Button className="rounded-xl cursor-pointer" onClick={openNewTaskModel}>
+        + New Task
+      </Button>
+        
+        <div className="flex items-center justify-center gap-4">
           <span className="text-sm text-zinc-500 dark:text-white">
             Filter:{" "}
           </span>
@@ -102,6 +107,7 @@ const TasksList = ({ filter, date }: Props) => {
           />
         </div>
       </div>
+      <SearchBar value={searchQuery} onChange={setSearchQuery} />
       {content}
       {filteredData.map((task: todoType) => (
         <TaskCard key={task._id} task={task} />

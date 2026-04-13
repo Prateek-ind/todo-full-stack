@@ -5,8 +5,8 @@ import { todoType } from "@/types/todoType";
 
 export const getTodos = async () => {
     try {
-        console.log("Fetching todos from:", process.env.NEXT_PUBLIC_BASE_URL);
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/todos`, {
+        console.log("Fetching todos from:", process.env.NEXT_PUBLIC_BASE_URL_LOCALHOST);
+        const response = await fetch(`/api/todos`, {
             credentials: "include",
             headers: {
                 "Content-Type": "application/json",
@@ -29,7 +29,7 @@ export const getTodos = async () => {
 
 export const createTodo = async (todo: todoType) => {    
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/todos/create`, {
+        const response = await fetch(`/api/todos/create`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -51,7 +51,7 @@ export const createTodo = async (todo: todoType) => {
 
 export const updateTodo = async (id: string, todo: todoType) => {
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/todos/${id}`, {
+        const response = await fetch(`/api/todos/${id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
@@ -72,7 +72,7 @@ export const updateTodo = async (id: string, todo: todoType) => {
 
 export const deleteTodo = async (id: string) => {
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/todos/${id}`, {
+        const response = await fetch(`/api/todos/${id}`, {
             method: "DELETE",
             credentials: "include"
         });
