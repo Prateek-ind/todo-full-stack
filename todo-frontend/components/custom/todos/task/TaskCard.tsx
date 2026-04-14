@@ -59,7 +59,7 @@ const handleMarkComplete = (e: React.MouseEvent) => {
 
   return (
     <>
-      <div className="group max-h-72 overflow-y-auto p-4 rounded-xl border flex items-start justify-between hover:shadow-sm transition"
+      <div className="group max-h-72 overflow-y-auto p-4 rounded-xl border bg-zinc-200 dark:bg-zinc-700 flex items-start justify-between hover:shadow-sm transition"
       onClick={()=>setOpenTaskDetails(true)}
       >
         <div className="flex flex-col gap-2">
