@@ -1,10 +1,16 @@
-"use client";
+
 
 import AuthButton from "@/components/custom/AuthButton";
 import HeroCard from "@/components/custom/HeroCard";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 
-export default function Home() {
+export default async function Home() {
+  const token = (await cookies()).get("token")?.value;
+
+  if (token) redirect("/todos");
+
   
 
   return (

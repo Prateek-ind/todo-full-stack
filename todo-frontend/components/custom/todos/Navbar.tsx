@@ -10,6 +10,8 @@ const Header = () => {
   const router = useRouter();
   const { isLoggedIn, setIsLoggedIn } = useAuth();
 
+
+
   
   const handleLogout = async () => {
     try {
