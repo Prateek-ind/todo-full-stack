@@ -100,7 +100,7 @@ const handleMarkComplete = (e: React.MouseEvent) => {
           </p>
 
           <p className="text-xs flex items-center gap-2">
-            <span className="font-medium text-zinc-500">Priority:</span>
+            <span className="font-medium text-zinc-500">Category: </span>
 
             <Badge
               variant="secondary"
